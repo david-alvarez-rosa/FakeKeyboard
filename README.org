@@ -1,3 +1,11 @@
 * FakeKeyboard
 
 FakeKeyboard with RP2040 micro controller.
+
+[[file:/img/spec-1.jpg]]
+[[file:/img/spec-2.jpg]]
+[[file:/img/spec-3.jpg]]
+[[file:/img/spec-4.jpg]]
+[[file:/img/spec-5.jpg]]
+[[file:/img/spec-6.jpg]]
+[[file:/img/spec-7.jpg]]
