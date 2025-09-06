@@ -1,4 +1,4 @@
-* FakeKeyboardMouse
+* Fake Keyboard Mouse
 
 Build a fake keyboard and mouse from scratch with an RP2040
 microcontroller.  Program any key input or mouse gesture.
