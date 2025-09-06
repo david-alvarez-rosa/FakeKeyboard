@@ -23,15 +23,14 @@
  *
  */
 
-#ifndef USB_DESCRIPTORS_H_
-#define USB_DESCRIPTORS_H_
+#pragma once
 
-enum {
+#include <cstdint>
+
+enum class ReportId : uint8_t {
   REPORT_ID_KEYBOARD = 1,
   REPORT_ID_MOUSE,
   REPORT_ID_CONSUMER_CONTROL,
   REPORT_ID_GAMEPAD,
   REPORT_ID_COUNT
 };
-
-#endif /* USB_DESCRIPTORS_H_ */

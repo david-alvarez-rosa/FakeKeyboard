@@ -39,7 +39,7 @@ auto tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
                            hid_report_type_t report_type, uint8_t const* buffer,
                            uint16_t bufsize) -> void {}
 
-static void send_hid_report(uint8_t report_id, uint32_t btn) {
+auto send_hid_report(uint8_t report_id, uint32_t btn) -> void {
   if (!tud_hid_ready()) {
     return;
   }
@@ -49,17 +49,17 @@ static void send_hid_report(uint8_t report_id, uint32_t btn) {
   if (btn) {
     uint8_t keycode[6] = {0};
     keycode[0] = HID_KEY_A;
-    tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, keycode);
+    tud_hid_keyboard_report(static_cast<uint8_t>(ReportId::REPORT_ID_KEYBOARD), 0, keycode);
     has_keyboard_key = true;
   } else {
     if (has_keyboard_key) {
-      tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, NULL);
+      tud_hid_keyboard_report(static_cast<uint8_t>(ReportId::REPORT_ID_KEYBOARD), 0, NULL);
     }
     has_keyboard_key = false;
   }
 }
 
-void hid_task(void) {
+auto hid_task() -> void {
   const uint32_t interval_ms = 10;
   static uint32_t start_ms = 0;
 
@@ -73,7 +73,7 @@ void hid_task(void) {
   if (tud_suspended() && btn) {
     tud_remote_wakeup();
   } else {
-    send_hid_report(REPORT_ID_KEYBOARD, btn);
+    send_hid_report(static_cast<uint8_t>(ReportId::REPORT_ID_KEYBOARD), btn);
   }
 }
 
