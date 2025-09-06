@@ -39,7 +39,7 @@ auto tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
                            hid_report_type_t report_type, uint8_t const* buffer,
                            uint16_t bufsize) -> void {}
 
-auto send_hid_report(uint8_t report_id, uint32_t btn) -> void {
+auto send_hid_report(uint32_t btn) -> void {
   if (!tud_hid_ready()) {
     return;
   }
@@ -68,12 +68,12 @@ auto hid_task() -> void {
   }
   start_ms += interval_ms;
 
-  uint32_t const btn = board_button_read();
+  auto btn = board_button_read();
 
   if (tud_suspended() && btn) {
     tud_remote_wakeup();
   } else {
-    send_hid_report(static_cast<uint8_t>(ReportId::REPORT_ID_KEYBOARD), btn);
+    send_hid_report(btn);
   }
 }
 
