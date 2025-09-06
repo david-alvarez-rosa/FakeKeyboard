@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 include(~/dev/pico-sdk/pico_sdk_init.cmake)
-project(FakeKeyboard C CXX ASM)
+project(HelloWorld C CXX ASM)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

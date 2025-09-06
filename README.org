@@ -55,7 +55,7 @@ Which can be compiled using CMake with the following =CMakeLists.txt= file.
   cmake_minimum_required(VERSION 3.13)
 
   include(~/dev/pico-sdk/pico_sdk_init.cmake)
-  project(HelloWorld CXX ASM)
+  project(HelloWorld C CXX ASM)
 
   set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -66,6 +66,12 @@ Which can be compiled using CMake with the following =CMakeLists.txt= file.
   pico_enable_stdio_uart(HelloWorld 0)
   target_link_libraries(HelloWorld pico_stdlib)
   pico_add_extra_outputs(HelloWorld)
+#+end_src
+
+Build normally.
+#+begin_src sh
+  $ PICO_SDK_PATH=~/dev/pico-sdk cmake -B build -G Ninja
+  $ cmake --build build
 #+end_src
 
 Connect the board to your computer while holding down the =BOOTSEL=
@@ -84,15 +90,15 @@ serial TTY device and connect to it with:
   $ screen /dev/ttyACM0
 #+end_src
 
+You should see "Hello, world!" printing on the screen.
+
 ** Specifications
 The only specs the manufacturer provided were these images :P
 
-[[file:./img/spec-1.jpg]]
-[[file:./img/spec-2.jpg]]
-[[file:./img/spec-3.jpg]]
-[[file:./img/spec-4.jpg]]
-[[file:./img/spec-5.jpg]]
-[[file:./img/spec-6.jpg]]
+| [[file:./img/spec-1.jpg]] | [[file:./img/spec-2.jpg]] |
+| [[file:./img/spec-3.jpg]] | [[file:./img/spec-4.jpg]] |
+| [[file:./img/spec-5.jpg]] | [[file:./img/spec-6.jpg]] |
+
 [[file:./img/spec-7.jpg]]
 
 ** Contributions
