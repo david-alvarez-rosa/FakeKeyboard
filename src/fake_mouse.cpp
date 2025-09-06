@@ -23,6 +23,7 @@ void tud_resume_cb(void) {}
 
 static void send_hid_report(uint8_t report_id, uint32_t btn) {
   if (!tud_hid_ready()) return;
+      int8_t const delta = 5;
 
   switch (report_id) {
     case REPORT_ID_KEYBOARD: {
@@ -32,7 +33,7 @@ static void send_hid_report(uint8_t report_id, uint32_t btn) {
         uint8_t keycode[6] = {0};
         keycode[0] = HID_KEY_A;
 
-        tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, keycode);
+        tud_hid_mouse_report(REPORT_ID_MOUSE, 0x00, delta, delta, 0, 0);
         has_keyboard_key = true;
       } else {
         if (has_keyboard_key)
