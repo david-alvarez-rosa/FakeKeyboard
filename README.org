@@ -7,6 +7,8 @@ microcontroller.  Program any key input or mouse gesture.
 |----------------------+-------------------------|
 | [[./img/mouse-demo.gif]] | [[./img/keyboard-demo.gif]] |
 
+Start or stop them by pressing the =BOOTSEL= button.
+
 ** Hardware
 I purchased the following RP2040-based board from AliExpress: MINI USB
 RP2040 Development Board Module, Dual Core, 4MB.
