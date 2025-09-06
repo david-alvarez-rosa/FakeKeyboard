@@ -1,11 +1,99 @@
 * FakeKeyboard
 
-FakeKeyboard with RP2040 micro controller.
+This project builds a fake keyboard from scratch using an RP2040
+microcontroller, also known as BadUSB.
 
-[[file:/img/spec-1.jpg]]
-[[file:/img/spec-2.jpg]]
-[[file:/img/spec-3.jpg]]
-[[file:/img/spec-4.jpg]]
-[[file:/img/spec-5.jpg]]
-[[file:/img/spec-6.jpg]]
-[[file:/img/spec-7.jpg]]
+** Product
+I purchased the following RP2040-based board from AliExpress: MINI USB
+RP2040 Development Board Module for Raspberry Pi, Dual Core, 4MB.
+
+[[file:./img/invoice.png]]
+** How to Build
+First, install the required dependencies:
+- =arm-none-eabi-gcc= :: ARM cross-compiler for building code targeting
+  ARM microcontrollers.
+- =arm-none-eabi-newlib= :: C standard library for ARM embedded systems.
+#+begin_src sh
+  $ sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib
+#+end_src
+
+Clone the Pico SDK and picotool repositories:
+- =pico-sdk= :: provides the official Raspberry Pi Pico development
+  libraries and tools.
+- =picotool= :: is a command-line utility for interacting with the Pico
+  board (e.g., uploading firmware or inspecting device details).
+#+begin_src sh
+  $ git clone https://github.com/raspberrypi/pico-sdk.git
+  $ git clone https://github.com/raspberrypi/picotool.git
+#+end_src
+
+Execute the following commands
+#+begin_src sh
+  $ PICO_SDK_PATH=~/dev/pico-sdk cmake -B build -G Ninja
+  $ cmake --build build
+#+end_src
+
+** How to Debug
+The following =Hello, World!= example is a great way to get started and
+verify that your board is functioning properly.
+#+begin_src cpp
+  #include <stdio.h>
+
+  #include "pico/stdlib.h"
+
+  auto main() -> int {
+    stdio_init_all();
+    while (true) {
+      printf("Hello, world!\n");
+      sleep_ms(1000);
+    }
+  }
+#+end_src
+
+Which can be compiled using CMake with the following =CMakeLists.txt= file.
+#+begin_src cmake
+  cmake_minimum_required(VERSION 3.13)
+
+  include(~/dev/pico-sdk/pico_sdk_init.cmake)
+  project(HelloWorld CXX ASM)
+
+  set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+  pico_sdk_init()
+
+  add_executable(HelloWorld main.cpp)
+  pico_enable_stdio_usb(HelloWorld 1)
+  pico_enable_stdio_uart(HelloWorld 0)
+  target_link_libraries(HelloWorld pico_stdlib)
+  pico_add_extra_outputs(HelloWorld)
+#+end_src
+
+Connect the board to your computer while holding down the =BOOTSEL=
+button; this will make it appear as a USB mass storage device. Use
+=lsblk= to check the device name, mount it, and copy the generated
+=.uf2= file to the board.
+#+begin_src sh
+  $ lsblk
+  $ sudo mount /dev/sdb1 /mnt/micro
+  $ sudo cp ./build/HelloWorld.uf2 /mnt/micro
+#+end_src
+
+The board will restart automatically. After a short wait, identify the
+serial TTY device and connect to it with:
+#+begin_src sh
+  $ screen /dev/ttyACM0
+#+end_src
+
+** Specifications
+The only specs the manufacturer provided were these images :P
+
+[[file:./img/spec-1.jpg]]
+[[file:./img/spec-2.jpg]]
+[[file:./img/spec-3.jpg]]
+[[file:./img/spec-4.jpg]]
+[[file:./img/spec-5.jpg]]
+[[file:./img/spec-6.jpg]]
+[[file:./img/spec-7.jpg]]
+
+** Contributions
+Suggestions or improvements? Raise a pull request!
