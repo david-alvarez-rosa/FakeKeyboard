@@ -1,13 +1,14 @@
-* FakeKeyboard
+* FakeKeyboardMouse
 
-This project builds a fake keyboard from scratch using an RP2040
-microcontroller.
+Build a fake keyboard and mouse from scratch with an RP2040
+microcontroller.  Program any key input or mouse gesture.
 
 ** Hardware
 I purchased the following RP2040-based board from AliExpress: MINI USB
 RP2040 Development Board Module, Dual Core, 4MB.
 
 [[file:./img/invoice.png]]
+
 ** How to Build
 First, install the required dependencies:
 - =arm-none-eabi-gcc= :: ARM cross-compiler for building code targeting
@@ -33,11 +34,34 @@ For the Pico SDK, pull submodules for getting TinyUSB library.
   $ git submodule update --init
 #+end_src
 
-Execute the following commands
+Build normally with CMake pointing =PICO_SDK_PATH= env variable to
+=pico-sdk= path.
 #+begin_src sh
   $ PICO_SDK_PATH=~/dev/pico-sdk cmake -B build -G Ninja
   $ cmake --build build
 #+end_src
+
+While holding down the =BOOTSEL= button, connect the board to your
+computer.  It will appear as a USB mass storage device.  Use =lsblk= to
+identify the device name, create a mount directory, and mount the
+device.
+#+begin_src sh
+  $ lsblk
+  $ sudo mkdir /mnt/micro
+  $ sudo mount /dev/sdb1 /mnt/micro
+#+end_src
+
+Copy one of the generated =.uf2= files to the board:
+- =fake_keyboard=: emulates a keyboard
+- =fake_mouse=: emulates a mouse
+- =fake_keyboard_mouse=: emulates both
+#+begin_src sh
+  $ sudo cp ./build/fake_keyboard.uf2 /mnt/micro
+#+end_src
+
+The board will automatically restart and appear as a keyboard/mouse
+device.  To begin the automation, simply press the =BOOTSEL= button.  To
+stop press =BOOTSEL= again.
 
 ** How to Debug
 The following =Hello, World!= example is a great way to get started and
@@ -81,7 +105,7 @@ Build normally.
 #+end_src
 
 Connect the board to your computer while holding down the =BOOTSEL=
-button; this will make it appear as a USB mass storage device. Use
+button; this will make it appear as a USB mass storage device.  Use
 =lsblk= to check the device name, mount it, and copy the generated
 =.uf2= file to the board.
 #+begin_src sh
@@ -90,7 +114,7 @@ button; this will make it appear as a USB mass storage device. Use
   $ sudo cp ./build/hello_world.uf2 /mnt/micro
 #+end_src
 
-The board will restart automatically. After a short wait, identify the
+The board will restart automatically.  After a short wait, identify the
 serial TTY device and connect to it with:
 #+begin_src sh
   $ screen /dev/ttyACM0
@@ -99,7 +123,7 @@ serial TTY device and connect to it with:
 You should see "Hello, world!" printing on the screen.
 
 ** Specifications
-The only specs the manufacturer provided were these images :P
+The only specs the manufacturer provided are these images :P
 
 | [[file:./img/spec-1.jpg]] | [[file:./img/spec-2.jpg]] |
 | [[file:./img/spec-3.jpg]] | [[file:./img/spec-4.jpg]] |
