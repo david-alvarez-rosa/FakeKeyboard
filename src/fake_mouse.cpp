@@ -23,6 +23,8 @@
  *
  */
 
+#include <cstdlib>
+
 #include "bsp/board_api.h"
 #include "usb_descriptors.h"
 
@@ -45,9 +47,11 @@ auto send_hid_report(uint32_t btn) -> void {
   }
 
   if (btn) {
-    int8_t const delta = 5;
+    int8_t delta_x = (rand() % 11) - 5;
+    int8_t delta_y = (rand() % 11) - 5;
+
     tud_hid_mouse_report(static_cast<uint>(ReportId::REPORT_ID_MOUSE), 0x00,
-                         delta, delta, 0, 0);
+                         delta_x, delta_y, 0, 0);
   }
 }
 
@@ -60,11 +64,19 @@ auto hid_task() -> void {
   }
   start_ms += interval_ms;
 
+  // static bool prev_btn = false;
+  // static bool running = true;
   auto btn = board_button_read();
 
-  if (tud_suspended() && btn) {
+  // if (prev_btn != btn) {
+  //   running = !running;
+  //   prev_btn = btn;
+  // }
+
+  if (tud_suspended()) {
     tud_remote_wakeup();
   } else {
+  // } else if (running) {
     send_hid_report(btn);
   }
 }
