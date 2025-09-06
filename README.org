@@ -1,11 +1,11 @@
 * FakeKeyboard
 
 This project builds a fake keyboard from scratch using an RP2040
-microcontroller, also known as BadUSB.
+microcontroller.
 
-** Product
+** Hardware
 I purchased the following RP2040-based board from AliExpress: MINI USB
-RP2040 Development Board Module for Raspberry Pi, Dual Core, 4MB.
+RP2040 Development Board Module, Dual Core, 4MB.
 
 [[file:./img/invoice.png]]
 ** How to Build
@@ -25,6 +25,12 @@ Clone the Pico SDK and picotool repositories:
 #+begin_src sh
   $ git clone https://github.com/raspberrypi/pico-sdk.git
   $ git clone https://github.com/raspberrypi/picotool.git
+#+end_src
+
+For the Pico SDK, pull submodules for getting TinyUSB library.
+#+begin_src sh
+  $ cd pico-sdk
+  $ git submodule update --init
 #+end_src
 
 Execute the following commands
@@ -61,11 +67,11 @@ Which can be compiled using CMake with the following =CMakeLists.txt= file.
 
   pico_sdk_init()
 
-  add_executable(HelloWorld main.cpp)
-  pico_enable_stdio_usb(HelloWorld 1)
-  pico_enable_stdio_uart(HelloWorld 0)
-  target_link_libraries(HelloWorld pico_stdlib)
-  pico_add_extra_outputs(HelloWorld)
+  add_executable(hello_world main.cpp)
+  pico_enable_stdio_usb(hello_world 1)
+  pico_enable_stdio_uart(hello_world 0)
+  target_link_libraries(hello_world pico_stdlib)
+  pico_add_extra_outputs(hello_world)
 #+end_src
 
 Build normally.
@@ -81,7 +87,7 @@ button; this will make it appear as a USB mass storage device. Use
 #+begin_src sh
   $ lsblk
   $ sudo mount /dev/sdb1 /mnt/micro
-  $ sudo cp ./build/HelloWorld.uf2 /mnt/micro
+  $ sudo cp ./build/hello_world.uf2 /mnt/micro
 #+end_src
 
 The board will restart automatically. After a short wait, identify the
