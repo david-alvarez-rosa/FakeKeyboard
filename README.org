@@ -3,6 +3,8 @@
 Build a fake keyboard and mouse from scratch with an RP2040
 microcontroller.  Program any key input or mouse gesture.
 
+| [[./img/mouse-demo.gif]] | [[./img/mouse-demo.gif]] |
+
 ** Hardware
 I purchased the following RP2040-based board from AliExpress: MINI USB
 RP2040 Development Board Module, Dual Core, 4MB.
