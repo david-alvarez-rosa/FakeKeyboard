@@ -24,26 +24,19 @@ First, install the required dependencies:
   $ sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib
 #+end_src
 
-Clone the Pico SDK and picotool repositories:
+Engage the Pico SDK and picotool submodules:
 - =pico-sdk= :: provides the official Raspberry Pi Pico development
   libraries and tools.
 - =picotool= :: is a command-line utility for interacting with the Pico
   board (e.g., uploading firmware or inspecting device details).
 #+begin_src sh
-  $ git clone https://github.com/raspberrypi/pico-sdk.git
-  $ git clone https://github.com/raspberrypi/picotool.git
-#+end_src
-
-For the Pico SDK, pull submodules for getting TinyUSB library.
-#+begin_src sh
-  $ cd pico-sdk
-  $ git submodule update --init
+  $ git submodule update --init --recursive
 #+end_src
 
 Build normally with CMake pointing =PICO_SDK_PATH= env variable to
 =pico-sdk= path.
 #+begin_src sh
-  $ PICO_SDK_PATH=~/dev/pico-sdk cmake -B build -G Ninja
+  $ PICO_SDK_PATH=./lib/pico-sdk cmake -B build -G Ninja
   $ cmake --build build
 #+end_src
 
@@ -90,7 +83,7 @@ Which can be compiled using CMake with the following =CMakeLists.txt= file.
 #+begin_src cmake
   cmake_minimum_required(VERSION 3.13)
 
-  include(~/dev/pico-sdk/pico_sdk_init.cmake)
+  include(./lib/pico-sdk/pico_sdk_init.cmake)
   project(HelloWorld C CXX ASM)
 
   set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -106,7 +99,7 @@ Which can be compiled using CMake with the following =CMakeLists.txt= file.
 
 Build normally.
 #+begin_src sh
-  $ PICO_SDK_PATH=~/dev/pico-sdk cmake -B build -G Ninja
+  $ PICO_SDK_PATH=./lib/pico-sdk cmake -B build -G Ninja
   $ cmake --build build
 #+end_src
 
