@@ -44,7 +44,8 @@ First, install the required dependencies:
   ARM microcontrollers.
 - =arm-none-eabi-newlib= :: C standard library for ARM embedded systems.
 #+begin_src sh
-  $ sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib
+  $ sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib  # Arch Linux
+  $ sudo apt-get install gcc-arm-none-eabi libnewlib-arm-none-eabi  # Debian-based
 #+end_src
 
 Engage the Pico SDK and picotool submodules:
