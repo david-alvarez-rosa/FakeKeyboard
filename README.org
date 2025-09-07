@@ -31,7 +31,7 @@ chosen binary to the board.  Available options are =fake_keyboard=
 (keyboard emulator), =fake_mouse= (mouse emulator), and
 =fake_keyboard_mouse= (emulates both). For example:
 #+begin_src sh
-  $ sudo cp ./build/fake_keyboard.uf2 /mnt/micro
+  $ cp fake_keyboard.uf2 /mnt/micro
 #+end_src
 
 After copying, the board will automatically reboot and appear as a
@@ -79,7 +79,7 @@ Copy one of the generated =.uf2= files to the board:
 - =fake_mouse=: emulates a mouse
 - =fake_keyboard_mouse=: emulates both
 #+begin_src sh
-  $ sudo cp ./build/fake_keyboard.uf2 /mnt/micro
+  $ cp ./build/fake_keyboard.uf2 /mnt/micro
 #+end_src
 
 The board will automatically restart and appear as a keyboard/mouse
@@ -134,7 +134,7 @@ button; this will make it appear as a USB mass storage device.  Use
 #+begin_src sh
   $ lsblk
   $ sudo mount /dev/sda1 /mnt/micro
-  $ sudo cp ./build/hello_world.uf2 /mnt/micro
+  $ cp ./build/hello_world.uf2 /mnt/micro
 #+end_src
 
 The board will restart automatically.  After a short wait, identify the
