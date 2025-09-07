@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-include(~/dev/pico-sdk/pico_sdk_init.cmake)
+include(./lib/pico-sdk/pico_sdk_init.cmake)
 project(FakeKeyboardMouse)
 
 set(CMAKE_CXX_STANDARD 23)
