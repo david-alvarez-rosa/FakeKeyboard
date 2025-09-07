@@ -8,6 +8,28 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
+
+    - name: Update platform
+      run: sudo apt-get update
+
+    - name: Install ARM toolchain
+      run: sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi git cmake ninja-build
+
+    - name: Engage pico-sdk and picotools submodules
+      run: git submodule update --init --recursive
+
+    - name: Build firmware
+      env:
+        PICO_SDK_PATH: ${{ github.workspace }}/lib/pico-sdk
+      run: cmake -B build -G Ninja && cmake --build build
+
+    - name: Upload UF2 Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: uf2-artifacts
+        path: build/*.uf2
+
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
