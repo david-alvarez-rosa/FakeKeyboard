@@ -4,6 +4,9 @@ on:
   push:
     tags: ['v*']
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -34,9 +37,9 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: uf2-artifacts
-        path: ./
+        path: uf2-artifacts/
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
-        files: uf2-artifacts
+        files: uf2-artifacts/*.uf2
