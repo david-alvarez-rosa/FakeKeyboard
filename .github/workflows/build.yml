@@ -8,10 +8,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Update platform
+      run: sudo apt-get update
+
     - name: Install ARM toolchain
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi git cmake ninja-build
+      run: sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi git cmake ninja-build
 
     - name: Engage pico-sdk and picotools submodules
       run: git submodule update --init --recursive
