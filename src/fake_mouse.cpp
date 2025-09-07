@@ -28,7 +28,7 @@
 #include <cstdlib>
 
 #include "bsp/board_api.h"
-#include "usb_descriptors.h"
+#include "usb_descriptors.hpp"
 
 auto tud_mount_cb() -> void {}
 auto tud_umount_cb() -> void {}

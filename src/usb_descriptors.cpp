@@ -23,7 +23,7 @@
  *
  */
 
-#include "usb_descriptors.h"
+#include "usb_descriptors.hpp"
 
 #include "bsp/board_api.h"
 #include "tusb.h"
