@@ -1,0 +1,16 @@
+name: format-check
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: clang-format files
+      run: find . \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -not -path './build/*' | xargs clang-format -i
+
+    - name: Check if something changed
+      run: git diff-index HEAD || exit 1
