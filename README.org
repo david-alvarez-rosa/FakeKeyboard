@@ -15,6 +15,29 @@ RP2040 Development Board Module, Dual Core, 4MB.
 
 [[file:./img/invoice.png]]
 
+** How to Use
+While holding down the =BOOTSEL= button, connect the board to your
+computer.  It will appear as a USB mass storage device.  Use =lsblk= to
+identify the device name, then create a mount directory and mount the
+device:
+#+begin_src sh
+  $ lsblk
+  $ sudo mkdir /mnt/micro
+  $ sudo mount /dev/sdb1 /mnt/micro
+#+end_src
+
+Download the latest =.uf2= firmware from the [[./releases][releases]] page.  Copy your
+chosen binary to the board.  Available options are =fake_keyboard=
+(keyboard emulator), =fake_mouse= (mouse emulator), and
+=fake_keyboard_mouse= (emulates both). For example:
+#+begin_src sh
+  $ sudo cp ./build/fake_keyboard.uf2 /mnt/micro
+#+end_src
+
+After copying, the board will automatically reboot and appear as a
+keyboard and/or mouse device.  To start automation, press the =BOOTSEL=
+button.  Press the button again to stop the automation.
+
 ** How to Build
 First, install the required dependencies:
 - =arm-none-eabi-gcc= :: ARM cross-compiler for building code targeting
