@@ -1,0 +1,35 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi git cmake ninja-build
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clone pico-sdk
+        run: |
+          git clone --recurse-submodules https://github.com/raspberrypi/pico-sdk.git
+
+      - name: Clone picotool
+        run: git clone https://github.com/raspberrypi/picotool.git
+
+      - name: Build firmware
+        env:
+          PICO_SDK_PATH: ${{ github.workspace }}/pico-sdk
+        run: |
+          cmake -B build -G Ninja
+          cmake --build build
+
+      - name: Upload UF2 Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fake_keyboard.uf2
+          path: build/*.uf2
