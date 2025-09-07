@@ -15,8 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clone pico-sdk
-        run: |
-          git clone --recurse-submodules https://github.com/raspberrypi/pico-sdk.git
+        run: git clone --recurse-submodules https://github.com/raspberrypi/pico-sdk.git && ls -al
 
       - name: Clone picotool
         run: git clone https://github.com/raspberrypi/picotool.git
@@ -24,12 +23,10 @@ jobs:
       - name: Build firmware
         env:
           PICO_SDK_PATH: ${{ github.workspace }}/pico-sdk
-        run: |
-          cmake -B build -G Ninja
-          cmake --build build
+        run: cmake -B build -G Ninja && cmake --build build
 
       - name: Upload UF2 Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: fake_keyboard.uf2
+          name: uf2-artifacts
           path: build/*.uf2
